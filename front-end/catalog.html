@@ -1,0 +1,16 @@
+<head>
+<title>Catalog test page</title>
+<link rel="stylesheet" style="text/css" href="style/catalog.css">
+<script type="text/javascript" src="script/jquery.js"></script>
+<script type="text/javascript" src="json/roms.js"></script>
+<script type="text/javascript" src="script/catalog.js"></script>
+<script type="text/javascript">
+	//Expose jQuery to the global object
+	window.jQuery = window.$ = jQuery;
+</script>
+</head>
+<body onload="onLoad()" onkeydown="onKey(event)">
+	<div id="cat-screen">
+		<div id="cat-pagescroller"></div>
+	</div>
+</body>

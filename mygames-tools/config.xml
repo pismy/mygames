@@ -1,0 +1,36 @@
+<config>
+	<emulators>
+		<emulator>
+			<id>mame4all</id>
+			<name>MAME4ALL</name>
+			<romsDir>C:\Users\CRHX7117\Documents\perso\MAME\config\roms</romsDir>
+			<startCommand>mame4all %rom%</startCommand>
+			<dat>data/mame4all.dat</dat>
+			<datType>mame4all</datType>
+		</emulator>
+		<emulator>
+			<id>fba</id>
+			<name>Final Burn Alpha</name>
+			<romsDir>C:\Users\CRHX7117\Documents\perso\MAME\config\roms</romsDir>
+			<startCommand>fba %rom%</startCommand>
+			<dat>data/fba_029671_od_release_10_working_roms.dat.xml</dat>
+			<datType>xml</datType>
+		</emulator>
+		<emulator>
+			<id>gngeo</id>
+			<name>GnGeo</name>
+			<romsDir>C:\Users\CRHX7117\Documents\perso\MAME\config\roms</romsDir>
+			<startCommand>fba %rom%</startCommand>
+			<dat>data/gngeo.dat</dat>
+			<datType>gngeo</datType>
+		</emulator>
+		<emulator>
+			<id>advmame</id>
+			<name>Advance MAME</name>
+			<romsDir>C:\Users\CRHX7117\Documents\perso\MAME\config\roms</romsDir>
+			<startCommand>mame %rom%</startCommand>
+			<dat>data/advmame.xml</dat>
+			<datType>xml</datType>
+		</emulator>
+	</emulators>
+</config>

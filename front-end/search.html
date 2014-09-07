@@ -1,0 +1,32 @@
+<head>
+<title>Catalog test page</title>
+<link rel="stylesheet" style="text/css" href="style/search.css">
+<script type="text/javascript" src="script/jquery.js"></script>
+<script type="text/javascript" src="json/roms.js"></script>
+<script type="text/javascript" src="script/search.js"></script>
+<script type="text/javascript">
+	//Expose jQuery to the global object
+	window.jQuery = window.$ = jQuery;
+</script>
+</head>
+<body onload="onLoad()">
+	<div id="toolbar">
+		<div class="filter" tabindex="0">
+			<label class="title">Catégorie</label>
+			<input id="category_0" name="category" type="checkbox" checked="checked"/><label for="category_0">All</label>
+			<input id="category_1" name="category" type="checkbox"/><label for="category_1">Shooter</label>
+			<input id="category_2" name="category" type="checkbox"/><label for="category_2">Platform</label>
+			<input id="category_3" name="category" type="checkbox"/><label for="category_3">Fighter</label>
+			<input id="category_4" name="category" type="checkbox"/><label for="category_4">Breakout</label>
+		</div>
+		<div class="filter" tabindex="0">
+			<label class="title">Emulateur</label>
+			<input id="emulator_all" name="emulator" type="checkbox"/><label for="emulator_all">All</label>
+			<input id="emulator_fba" name="emulator" type="checkbox" checked="checked"/><label for="emulator_fba">Final Burn Alpha</label>
+			<input id="emulator_mame4all" name="emulator" type="checkbox" checked="checked"/><label for="emulator_mame4all">MAME 4 ALL</label>
+			<input id="emulator_gngeo" name="emulator" type="checkbox" checked="checked"/><label for="emulator_gngeo">GnGeo</label>
+			<input id="emulator_advmame" name="emulator" type="checkbox"/><label for="emulator_advmame">Advance MAME</label>
+		</div>
+	</div>
+	<div id="grid-viewport"><div id="grid-scroller"></div></div>
+</body>
