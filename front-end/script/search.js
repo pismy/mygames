@@ -38,7 +38,7 @@ function buildGrid(roms) {
 	$(".cover")[0].focus();
 }
 function buildPage(roms, index) {
-	var page = $("<div>").addClass("grid-page");
+	var page = $("<table>").addClass("grid-page");
 	var romsPerRow = COLUMNS;
 	for(var i=0; i<ROWS; i++) {
 		page.append(buildRow(roms, index));
@@ -52,13 +52,13 @@ function buildPage(roms, index) {
 }
 
 function buildRow(roms, index) {
-	var row = $("<div>").addClass("grid-row");
+	var row = $("<tr>").addClass("grid-row");
 	var len = Math.min(roms.length, COLUMNS);
 	for(var i=0; i<len; i++) {
 		var rom = roms[index+i];
 		console.log("rom["+(i+index)+"]: "+rom.id+" ("+rom.name+")")
 		
-		row.append($("<div>").addClass("grid-cell")
+		row.append($("<td>").addClass("grid-cell")
 			.append($("<a>")
 				.attr("id", "game_"+rom.id)
 				.addClass("cover")
@@ -94,7 +94,7 @@ function getGridPosition(cover) {
 	}
 	var cell = $(cover).parent();
 	var row = cell.parent();
-	var page = row.parent();
+	var page = row.parent().parent();
 	
 	return {
 		page: page.index(),
@@ -105,7 +105,7 @@ function getGridPosition(cover) {
 function getGridCover(pos) {
 //	return $("#grid-scroller .grid-page:nth-child("+(pos.page+1)+") .grid-row:nth-child("+(pos.row+1)+") .grid-cell:nth-child("+(pos.col+1)+") .cover")[0];
 	try {
-		return document.getElementById("grid-scroller").children[pos.page].children[pos.row].children[pos.col].children[0];
+		return document.getElementById("grid-scroller").children[pos.page].firstChild.children[pos.row].children[pos.col].children[0];
 	} catch(e) {
 		console.log("error: "+e)
 		return null;

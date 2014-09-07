@@ -14,28 +14,28 @@ public class Files {
 		return new File("E:/perso/MAME/config/emulators/mame4all-pi/roms");
 	}
 	public static File getMameDBDat() {
-		return new File("data/mamedb/mamedb.xml");
+		return new File("../data/mamedb/mamedb.xml");
 	}
 	public static File getMameDBLst() {
-		return new File("data/mamedb/mamedb.lst");
+		return new File("../data/mamedb/mamedb.lst");
 	}
 	public static File getAdvMameDat() {
-		return new File("data/advmame/advmame.xml");
+		return new File("../data/advmame/advmame.xml");
 	}
 	public static File getAdvMameLst() {
-		return new File("data/advmame/roms.lst");
+		return new File("../data/advmame/roms.lst");
 	}
 	public static File getFbaDat() {
-		return new File("data/fba/fba_029671_od_release_10_working_roms.dat.xml");
+		return new File("../data/fba/fba_029671_od_release_10_working_roms.dat.xml");
 	}
 	public static File getFbaLst() {
-		return new File("data/fba/roms.lst");
+		return new File("../data/fba/roms.lst");
 	}
 	public static File getMame4AllDat() {
-		return new File("data/mame4all/mame4all.dat");
+		return new File("../data/mame4all/mame4all.dat");
 	}
 	public static File getMame4AllLst() {
-		return new File("data/mame4all/roms.lst");
+		return new File("../data/mame4all/roms.lst");
 	}
 //	public static void main(String[] args) {
 //		for(File f : getAdvMameRomsDir().listFiles()) {
@@ -43,6 +43,6 @@ public class Files {
 //		}
 //	}
 	public static File getGnGeoLst() {
-		return new File("data/gngeo/roms.lst");
+		return new File("../data/gngeo/roms.lst");
 	}
 }
