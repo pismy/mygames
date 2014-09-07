@@ -234,18 +234,18 @@ p,span,form,h1,h2,h3,h4,h5,h6,input,select,textarea,div,a,img,td,table {
 	z-index: 100;
 }
 .dialog-fade .dialog-box {
-	position: absolute;
+	position: relative;
 	width: 700px;
 	/* height: 600px; */
-	left: 290px;
+	/* left: 290px; */
 	top: 60px;
 	padding: 15px;
+	margin: 0 auto;
 
 	color: #777;
 	background: #FFF;
 	box-shadow: 0 0 20px #000;
 	/* border: 1px solid #555; */
-	display: inline-block;
 	overflow: hidden;
 	
 	/* background: -webkit-gradient(linear, left top, right bottom, from(#fff), to(#bbb));
