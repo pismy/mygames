@@ -20,7 +20,7 @@ import pismy.mygames.dat.mamedb.MameDB.MameDbGame;
 import pismy.mygames.utils.file.FileUtils;
 import pismy.mygames.utils.parse.ParseError;
 
-public class GetFromMameDB {
+public class Consolidate {
 	/**
 	 * Grabs ROM information and covers (title & snapshot) from MameDB, and
 	 * produces an xml dat file

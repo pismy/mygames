@@ -183,6 +183,12 @@ p,span,form,h1,h2,h3,h4,h5,h6,input,select,textarea,div,a,img,td,table {
 	text-align: center;
 	vertical-align: middle;
 }
+/* 
+max cover size: 222 + (1 + 3) x 2 = 230px
+ - 720 : 3 x 240 = 3 x 230 + 30
+ - 1024: 4 x 256 = 4 x 230 + 104
+ - 1280: 5 x 256 = 5 x 230 + 130
+*/
 .cover {
 	display: inline-block;
 	min-width: 167px;
