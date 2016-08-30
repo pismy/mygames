@@ -2,12 +2,20 @@ package pismy.mygames.emulationstation.gamelist;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+//@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Game {
+	/**
+	 * the ROM path
+	 */
+	@XmlElement
+	public String path;
 	/**
 	 * the displayed name for the game.
 	 */
