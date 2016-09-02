@@ -9,14 +9,14 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import pismy.mygames.Files;
+import pismy.mygames.MyMameEnv;
 import pismy.mygames.dat.legacy.MameDat;
 import pismy.mygames.dat.xml.DataFile;
 import pismy.mygames.dat.xml.Game;
 import pismy.mygames.dat.xml.Mame;
-import pismy.mygames.utils.GameUtils;
-import pismy.mygames.utils.GameUtils.Comparison;
-import pismy.mygames.utils.GameUtils.Status;
+import pismy.mygames.utils.GameComparator;
+import pismy.mygames.utils.GameComparator.Comparison;
+import pismy.mygames.utils.GameComparator.Status;
 import pismy.mygames.utils.parse.ParseError;
 
 public class AllRoms {
@@ -24,13 +24,13 @@ public class AllRoms {
 	 * Writes all roms managed by advmame, mame4all, FBA into a csv file
 	 */
 	public static void main(String[] args) throws IOException, ParseError, JAXBException, SAXException, ParserConfigurationException {
-		Mame advmame = Mame.load(Files.getAdvMameDat());
+		Mame advmame = Mame.load(MyMameEnv.getAdvMameDat());
 		System.out.println("advmame ROMs: "+advmame.getGames().size());
 		
-		MameDat mame4all = MameDat.load(Files.getMame4AllDat());
+		MameDat mame4all = MameDat.load(MyMameEnv.getMame4AllDat());
 		System.out.println("mame4all ROMs: "+mame4all.getGames().size());
 
-		DataFile fba = DataFile.load(Files.getFbaDat());
+		DataFile fba = DataFile.load(MyMameEnv.getFbaDat());
 		System.out.println("FBA ROMs: "+fba.getGames().size());
 
 		// now build table
@@ -43,8 +43,8 @@ public class AllRoms {
 		for(Game advMameGame : advmame.getGames()) {
 			String name = advMameGame.getName();
 			Game gngeoGame = "neogeo".equals(advMameGame.getRomOf()) ? advMameGame : null;
-			pismy.mygames.dat.legacy.Game mame4allGame = GameUtils.getGameByName(mame4all, name);
-			Game fbaGame = GameUtils.getGameByName(fba,name);
+			pismy.mygames.dat.legacy.Game mame4allGame = mame4all.byName(name);
+			Game fbaGame = fba.byName(name);
 			if(gngeoGame == null && mame4allGame == null && fbaGame == null)
 				continue;
 			
@@ -81,7 +81,7 @@ public class AllRoms {
 			if(mame4allGame == null) {
 				writer.write("N/A");
 			} else {
-				Comparison cmp = GameUtils.compare(mame4allGame, advMameGame);
+				Comparison cmp = GameComparator.compare(mame4allGame, advMameGame);
 				writer.write(cmp.dump(Status.incompatible, true));
 			}
 			writer.write(";");
@@ -94,7 +94,7 @@ public class AllRoms {
 			if(fbaGame == null) {
 				writer.write("N/A");
 			} else {
-				Comparison cmp = GameUtils.compare(fbaGame, advMameGame);
+				Comparison cmp = GameComparator.compare(fbaGame, advMameGame);
 				writer.write(cmp.dump(Status.incompatible, true));
 			}
 			writer.write("\n");

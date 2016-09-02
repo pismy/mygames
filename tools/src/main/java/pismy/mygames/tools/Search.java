@@ -1,19 +1,13 @@
 package pismy.mygames.tools;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import pismy.mygames.Files;
-import pismy.mygames.dat.IGame;
+import pismy.mygames.MyMameEnv;
 import pismy.mygames.dat.file.ZipDat;
 import pismy.mygames.dat.legacy.MameDat;
 import pismy.mygames.dat.xml.DataFile;
@@ -27,16 +21,16 @@ import pismy.mygames.utils.parse.ParseError;
  */
 public class Search {
 	public static void main(String[] args) throws IOException, ParseError, JAXBException, SAXException, ParserConfigurationException {
-		Mame advmame = Mame.load(Files.getAdvMameDat());
+		Mame advmame = Mame.load(MyMameEnv.getAdvMameDat());
 		System.out.println("advmame ROMs: "+advmame.getGames().size());
 		
-		MameDat mame4all = MameDat.load(Files.getMame4AllDat());
+		MameDat mame4all = MameDat.load(MyMameEnv.getMame4AllDat());
 		System.out.println("mame4all ROMs: "+mame4all.getGames().size());
 
-		DataFile fba = DataFile.load(Files.getFbaDat());
+		DataFile fba = DataFile.load(MyMameEnv.getFbaDat());
 		System.out.println("FBA ROMs: "+fba.getGames().size());
 
-		ZipDat advmameroms = new ZipDat(Files.getAdvMameRomsDir());
+		ZipDat advmameroms = new ZipDat(MyMameEnv.getAdvMameRomsDir());
 		System.out.println("my advmame ROMs: "+advmameroms.getGames().size());
 		
 //		// ROMs >= 1990 that I don't have

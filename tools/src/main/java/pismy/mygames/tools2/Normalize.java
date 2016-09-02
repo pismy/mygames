@@ -1,29 +1,34 @@
 package pismy.mygames.tools2;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import pismy.mygames.Files;
+import pismy.mygames.MyMameEnv;
 import pismy.mygames.dat.IGame;
 import pismy.mygames.dat.lst.LstGame;
 import pismy.mygames.utils.Tree;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 
 /**
  * <ul>
  * <li>filtrer les ROMs BIOS
- * <li>télécharger toutes les ROM parent
- * <li>le nom title et scan est-il toujours le même ?
+ * <li>tï¿½lï¿½charger toutes les ROM parent
+ * <li>le nom title et scan est-il toujours le mï¿½me ?
  * <li>le nom title et scan d'un clone est-il toujours le nom du parent ?
- * <li>infos systématiquement redondantes d'un clone et du master ? (year, category, manuf)
+ * <li>infos systï¿½matiquement redondantes d'un clone et du master ? (year, category, manuf)
  * </ul>
  */
 public class Normalize {
 	public static void main(String[] args) throws IOException {
-		List<LstGame> games = LstGame.load(Files.getMameDBLst());
+		List<LstGame> games = LstGame.load(MyMameEnv.getMameDBLst());
 		countClones(games);
 		normBios(games);
 		normImages(games);
@@ -133,4 +138,5 @@ public class Normalize {
 
 		// mame.save(new File("data/mamedb2.xml"));
 	}
+
 }

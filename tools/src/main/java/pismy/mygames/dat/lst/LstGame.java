@@ -7,16 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import pismy.mygames.dat.IGame;
 import pismy.mygames.dat.IRom;
 
 import com.google.common.base.Strings;
 
-public class LstGame implements IGame {
+public class LstGame extends IGame<IRom> {
 	private String name;
 
 	private String cloneOf;
@@ -124,7 +122,7 @@ public class LstGame implements IGame {
 	}
 
 	@Override
-	public List<? extends IRom> getRoms() {
+	public List<IRom> getRoms() {
 		return null;
 	}
 	

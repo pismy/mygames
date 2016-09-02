@@ -23,7 +23,7 @@ import pismy.mygames.dat.IDat;
  * @author Pierre Smeyers
  */
 @XmlRootElement(name = "mame")
-public class Mame implements IDat {
+public class Mame extends IDat<Game> {
 	
 	@XmlAttribute
 	private String build;

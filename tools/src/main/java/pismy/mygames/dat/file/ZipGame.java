@@ -11,7 +11,7 @@ import java.util.zip.ZipFile;
 import pismy.mygames.dat.IGame;
 import pismy.mygames.utils.file.FileUtils;
 
-public class ZipGame implements IGame {
+public class ZipGame extends IGame<ZipRom> {
 	final File file;
 	ZipFile zip;
 	List<ZipRom> roms;

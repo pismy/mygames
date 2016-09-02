@@ -17,7 +17,7 @@ import pismy.mygames.utils.parse.ParseHelper;
  * @author Pierre Smeyers
  */
 @XmlRootElement(name = "mame")
-public class MameDat implements IDat {
+public class MameDat extends IDat<Game> {
 	
 	private String name;
 	private String description;

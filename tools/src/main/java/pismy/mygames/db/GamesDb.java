@@ -23,7 +23,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.xml.sax.SAXException;
 
-import pismy.mygames.Files;
+import pismy.mygames.MyMameEnv;
 import pismy.mygames.dat.IGame;
 import pismy.mygames.dat.legacy.MameDat;
 import pismy.mygames.dat.xml.DataFile;
@@ -39,7 +39,7 @@ public class GamesDb {
 
 	public static void main(String[] args) {
 		GamesDb db = new GamesDb(new GamesDbConfig() {
-			File romsFile = Files.getMameDBDat();
+			File romsFile = MyMameEnv.getMameDBDat();
 			Mame mame;
 			@Override
 			public long getRomsLastModified() {
@@ -50,7 +50,7 @@ public class GamesDb {
 			public List<? extends IGame> getRoms() {
 				if (mame == null) {
 					try {
-						mame = Mame.load(Files.getMameDBDat());
+						mame = Mame.load(MyMameEnv.getMameDBDat());
 					} catch (JAXBException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -89,8 +89,8 @@ public class GamesDb {
 						if (roms == null) {
 							roms = new ArrayList<String>();
 							try {
-								Mame mame = Mame.load(Files.getAdvMameDat());
-								for (IGame g : mame.getGames()) {
+								Mame mame = Mame.load(MyMameEnv.getAdvMameDat());
+								for (IGame<?> g : mame.getGames()) {
 									roms.add(g.getName());
 								}
 							} catch (IOException e) {
@@ -144,7 +144,7 @@ public class GamesDb {
 						if (roms == null) {
 							roms = new ArrayList<String>();
 							try {
-								MameDat mame = MameDat.load(Files.getMame4AllDat());
+								MameDat mame = MameDat.load(MyMameEnv.getMame4AllDat());
 								for (IGame g : mame.getGames()) {
 									roms.add(g.getName());
 								}
@@ -193,7 +193,7 @@ public class GamesDb {
 						if (roms == null) {
 							roms = new ArrayList<String>();
 							try {
-								DataFile mame = DataFile.load(Files.getFbaDat());
+								DataFile mame = DataFile.load(MyMameEnv.getFbaDat());
 								for (IGame g : mame.getGames()) {
 									roms.add(g.getName());
 								}
@@ -251,7 +251,7 @@ public class GamesDb {
 
 	static {
 		try {
-			// Création de la SessionFactory à partir de hibernate.cfg.xml
+			// Crï¿½ation de la SessionFactory ï¿½ partir de hibernate.cfg.xml
 			sessionFactory = new Configuration().configure().buildSessionFactory();
 		} catch (Throwable ex) {
 			// Make sure you log the exception, as it might be swallowed

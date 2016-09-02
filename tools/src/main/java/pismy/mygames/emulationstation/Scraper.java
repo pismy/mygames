@@ -2,7 +2,6 @@ package pismy.mygames.emulationstation;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -25,7 +24,7 @@ import pismy.mygames.dat.xml.DataFile;
 import pismy.mygames.emulationstation.gamelist.Game;
 import pismy.mygames.emulationstation.gamelist.GameList;
 import pismy.mygames.utils.GifSequenceWriter;
-import pismy.mygames.utils.file.FileUtils;
+import pismy.mygames.utils.file.Downloader;
 
 public class Scraper {
 	/**
@@ -86,27 +85,23 @@ public class Scraper {
 					// download title
 					File titleFile = new File(titlesDir, desc.getTitleImage() + ".png");
 					BufferedImage titleImg = null;
-					if (!titleFile.exists()) {
-						try {
-							URL titleUrl = new URL("http://www.mamedb.com/titles/" + desc.getTitleImage() + ".png");
-							FileUtils.copy(titleUrl.openStream(), new FileOutputStream(titleFile));
-							titleImg = ImageIO.read(titleFile);
-						} catch (Exception ioe) {
-							System.err.println("Error while getting '" + desc.getTitleImage() + "' title image");
-						}
+					try {
+						URL titleUrl = new URL("http://www.mamedb.com/titles/" + desc.getTitleImage() + ".png");
+						Downloader.downloadAs(titleUrl, titleFile, false);
+						titleImg = ImageIO.read(titleFile);
+					} catch (Exception ioe) {
+						System.err.println("Error while getting '" + desc.getTitleImage() + "' title image");
 					}
 
 					// download snap
 					File snapFile = new File(snapsDir, desc.getSnapshotImage() + ".png");
 					BufferedImage snapImg = null;
-					if (!snapFile.exists()) {
-						try {
-							URL snapUrl = new URL("http://www.mamedb.com/snap/" + desc.getSnapshotImage() + ".png");
-							FileUtils.copy(snapUrl.openStream(), new FileOutputStream(snapFile));
-							snapImg = ImageIO.read(snapFile);
-						} catch (Exception ioe) {
-							System.err.println("Error while getting '" + desc.getSnapshotImage() + "' snap image");
-						}
+					try {
+						URL snapUrl = new URL("http://www.mamedb.com/snap/" + desc.getSnapshotImage() + ".png");
+						Downloader.downloadAs(snapUrl, snapFile, false);
+						snapImg = ImageIO.read(snapFile);
+					} catch (Exception ioe) {
+						System.err.println("Error while getting '" + desc.getSnapshotImage() + "' snap image");
 					}
 
 					if (titleImg != null || snapImg != null) {

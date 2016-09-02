@@ -21,7 +21,7 @@ import pismy.mygames.dat.IDat;
  * @author Pierre Smeyers
  */
 @XmlRootElement(name = "datafile")
-public class DataFile implements IDat {
+public class DataFile extends IDat<Game> {
 	
 	@XmlAttribute
 	private String build;

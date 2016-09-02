@@ -4,10 +4,10 @@ import java.util.List;
 
 import pismy.mygames.dat.IGame;
 import pismy.mygames.dat.IRom;
-import pismy.mygames.utils.GameUtils;
+import pismy.mygames.utils.GameComparator;
 
-public class GameWrapper implements IGame {
-	final IGame main, parent;
+public class GameWrapper extends IGame<IRom> {
+	final IGame<IRom> main, parent;
 
 	public GameWrapper(IGame main, IGame parent) {
 		this.main = main;
@@ -45,11 +45,11 @@ public class GameWrapper implements IGame {
 	}
 
 	@Override
-	public List<? extends IRom> getRoms() {
+	public List<IRom> getRoms() {
 		return main.getRoms();
 	}
 
 	public IRom getRom(String name) {
-		return GameUtils.getRomByName(main, name);
+		return main.byName(name);
 	}
 }

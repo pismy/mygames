@@ -10,7 +10,7 @@ import pismy.mygames.utils.parse.ParseHelper;
 /**
  * @author Pierre Smeyers
  */
-public class Game implements IGame {
+public class Game extends IGame<Rom> {
 	private String name;
 	private String description;
 	private List<Rom> roms = new ArrayList<Rom>();

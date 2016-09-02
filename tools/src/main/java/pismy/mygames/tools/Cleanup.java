@@ -16,7 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import pismy.mygames.Files;
+import pismy.mygames.MyMameEnv;
 import pismy.mygames.dat.IDat;
 import pismy.mygames.dat.IGame;
 import pismy.mygames.dat.file.ZipDat;
@@ -25,8 +25,8 @@ import pismy.mygames.dat.legacy.MameDat;
 import pismy.mygames.dat.wrapper.DatWrapper;
 import pismy.mygames.dat.xml.DataFile;
 import pismy.mygames.dat.xml.Mame;
-import pismy.mygames.utils.GameUtils;
-import pismy.mygames.utils.GameUtils.Comparison;
+import pismy.mygames.utils.GameComparator;
+import pismy.mygames.utils.GameComparator.Comparison;
 import pismy.mygames.utils.parse.ParseError;
 
 /**
@@ -35,13 +35,13 @@ import pismy.mygames.utils.parse.ParseError;
  * @author crhx7117
  */
 public class Cleanup {
-	public static void makeReport(ZipDat roms, IDat database, File output) throws IOException {
+	public static void makeReport(ZipDat roms, IDat<?> database, File output) throws IOException {
 		FileWriter writer = new FileWriter(output);
 		
 		writer.write("ROM;Clone of;Name;Year;Status;Comment\n");
 		
 		for(ZipGame zg : roms.getGames()) {
-			IGame ref = GameUtils.getGameByName(database, zg.getName());
+			IGame<?> ref = ((IDat<?>) database).byName(zg.getName());
 			// ROM
 			writer.write(zg.getName());
 			writer.write(";");
@@ -67,7 +67,7 @@ public class Cleanup {
 				writer.write("unknown;");
 			} else {
 				// check validity
-				Comparison comp = GameUtils.compare(zg, ref);
+				Comparison comp = GameComparator.compare(zg, ref);
 				writer.write(comp.getStatus().toString());
 				writer.write(";");
 				writer.write("\"");
@@ -127,7 +127,7 @@ public class Cleanup {
 		
 		Map<String, List<GameAndComp>> parentRom2ValidGames = new HashMap<String, List<GameAndComp>>();
 		for(ZipGame zg : roms.getGames()) {
-			IGame ref = GameUtils.getGameByName(database, zg.getName());
+			IGame ref = ((IDat<?>) database).byName(zg.getName());
 			if(zg.isCorrupt()) {
 				// --- move corrupt games
 				System.out.println("["+zg.getName()+"] corrupt: move to ./corrupt");
@@ -141,7 +141,7 @@ public class Cleanup {
 				}
 			} else {
 				// check validity
-				Comparison comp = GameUtils.compare(zg, ref);
+				Comparison comp = GameComparator.compare(zg, ref);
 //				Status st = comp.getStatus();
 //				if(st != Status.matches) {
 ////					System.out.println("["+zg.getName()+"] does not match: \n"+comp);
@@ -211,28 +211,28 @@ public class Cleanup {
 		// --- 
 	}
 	public static void main(String[] args) throws IOException, ParseError, JAXBException, SAXException, ParserConfigurationException {
-		DatWrapper advmame = new DatWrapper(Mame.load(Files.getAdvMameDat()), null);
+		DatWrapper advmame = new DatWrapper(Mame.load(MyMameEnv.getAdvMameDat()), null);
 		System.out.println("advmame ROMs: "+advmame.getGames().size());
 		
-		ZipDat advmameroms = new ZipDat(Files.getAdvMameRomsDir());
+		ZipDat advmameroms = new ZipDat(MyMameEnv.getAdvMameRomsDir());
 		System.out.println("my advmame ROMs: "+advmameroms.getGames().size());
 		
 //		cleanup(advmameroms, advmame, true);
 		makeReport(advmameroms, advmame, new File("advmame_roms.csv"));
 		
-		DatWrapper mame4all = new DatWrapper(MameDat.load(Files.getMame4AllDat()), advmame);
+		DatWrapper mame4all = new DatWrapper(MameDat.load(MyMameEnv.getMame4AllDat()), advmame);
 		System.out.println("mame4all ROMs: "+mame4all.getGames().size());
 
-		ZipDat mame4allroms = new ZipDat(Files.getMame4AllRomsDir());
+		ZipDat mame4allroms = new ZipDat(MyMameEnv.getMame4AllRomsDir());
 		System.out.println("my mame4all ROMs: "+mame4allroms.getGames().size());
 		
 //		cleanup(mame4allroms, mame4all, true);
 		makeReport(mame4allroms, mame4all, new File("mame4all_roms.csv"));
 		
-		DatWrapper fba = new DatWrapper(DataFile.load(Files.getFbaDat()), advmame);
+		DatWrapper fba = new DatWrapper(DataFile.load(MyMameEnv.getFbaDat()), advmame);
 		System.out.println("FBA ROMs: "+fba.getGames().size());
 
-		ZipDat fbaroms = new ZipDat(Files.getFbaRomsDir());
+		ZipDat fbaroms = new ZipDat(MyMameEnv.getFbaRomsDir());
 		System.out.println("my fba ROMs: "+fbaroms.getGames().size());
 		
 //		cleanup(fbaroms, fba, true);

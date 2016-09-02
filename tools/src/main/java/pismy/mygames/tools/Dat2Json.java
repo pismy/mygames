@@ -11,12 +11,12 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import pismy.mygames.Files;
+import pismy.mygames.MyMameEnv;
 import pismy.mygames.dat.file.ZipDat;
 import pismy.mygames.dat.file.ZipGame;
 import pismy.mygames.dat.xml.Game;
 import pismy.mygames.dat.xml.Mame;
-import pismy.mygames.utils.GameUtils;
+import pismy.mygames.utils.GameComparator;
 import pismy.mygames.utils.json.JSonObjectWriter;
 import pismy.mygames.utils.json.JSonSerializer;
 import pismy.mygames.utils.json.JSonWriter;
@@ -27,13 +27,13 @@ public class Dat2Json {
 	 * Converts a dat file into JSON
 	 */
 	public static void main(String[] args) throws JAXBException, SAXException, IOException, ParserConfigurationException {
-		Mame mamedbDat = Mame.load(Files.getMameDBDat());
-		ZipDat myroms = new ZipDat(Files.getAdvMameRomsDir());
+		Mame mamedbDat = Mame.load(MyMameEnv.getMameDBDat());
+		ZipDat myroms = new ZipDat(MyMameEnv.getAdvMameRomsDir());
 		System.out.println("my advmame ROMs: "+myroms.getGames().size());
 		
 		List<Game> gamesIhave = new ArrayList<Game>();
 		for(ZipGame g : myroms.getGames()) {
-			Game g2 = GameUtils.getGameByName(mamedbDat, g.getName());
+			Game g2 = mamedbDat.byName(g.getName());
 			if(g2 != null)
 				gamesIhave.add(g2);
 		}

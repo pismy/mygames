@@ -11,7 +11,7 @@ import pismy.mygames.dat.IGame;
 /**
  * @author Pierre Smeyers
  */
-public class Game implements IGame {
+public class Game extends IGame<Rom> {
 	private YesNo runnable = YesNo.yes;
 
 //	@XmlAttribute

@@ -1,12 +1,14 @@
 package pismy.mygames.dat.file;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import pismy.mygames.dat.IRom;
-import pismy.mygames.utils.DigestUtils;
+
+import com.google.common.hash.Hashing;
+import com.google.common.io.BaseEncoding;
+import com.google.common.io.ByteStreams;
 
 public class ZipRom implements IRom {
 	final ZipFile file;
@@ -21,17 +23,22 @@ public class ZipRom implements IRom {
 	public String getName() {
 		return entry.getName();
 	}
+	private static final String HEX = "0123456789abcdef";
 	@Override
 	public String getCrc() {
-		return DigestUtils.toHex(entry.getCrc(), 8);
+		long value = entry.getCrc();
+		StringBuffer sb = new StringBuffer();
+		for ( int i = 0; i < 8; i++, value >>= 4) // shift by four bits as each char represents 1/2 byte
+		{
+			sb.insert(0, HEX.charAt((int)(value & 0xF)));
+		}
+		return sb.toString();
 	}
 	@Override
 	public String getMd5() {
 		if(md5 == null) {
 			try {
-				md5 = DigestUtils.toHex(DigestUtils.digest(file.getInputStream(entry), "MD5", true));
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				md5 = BaseEncoding.base16().encode(Hashing.md5().hashBytes(ByteStreams.toByteArray(file.getInputStream(entry))).asBytes());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -42,9 +49,7 @@ public class ZipRom implements IRom {
 	public String getSha1() {
 		if(sha1 == null) {
 			try {
-				sha1 = DigestUtils.toHex(DigestUtils.digest(file.getInputStream(entry), "SHA-1", true));
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				md5 = BaseEncoding.base16().encode(Hashing.sha1().hashBytes(ByteStreams.toByteArray(file.getInputStream(entry))).asBytes());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

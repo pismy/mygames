@@ -3,12 +3,11 @@ package pismy.mygames.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import pismy.mygames.dat.IDat;
 import pismy.mygames.dat.IGame;
 import pismy.mygames.dat.IRom;
-import pismy.mygames.utils.GameUtils.Comparison.Difference;
+import pismy.mygames.utils.GameComparator.Comparison.Difference;
 
-public class GameUtils {
+public class GameComparator {
 	public enum Status {
 		matches, compatible, can_be_fixed, incompatible
 	}
@@ -30,22 +29,6 @@ public class GameUtils {
 		}
 	}
 
-	public static <T extends IGame> T getGameByName(IDat dat, String name) {
-		for (IGame g : dat.getGames()) {
-			if (name.equals(g.getName()))
-				return (T) g;
-		}
-		return null;
-	}
-
-	public static <T extends IRom> T getRomByName(IGame game, String name) {
-		for (IRom r : game.getRoms()) {
-			if (name.equals(r.getName()))
-				return (T) r;
-		}
-		return null;
-	}
-
 	private static Difference compare(IRom rom, IRom expected) {
 		if (rom.getSize() != expected.getSize())
 			return new WrongSize(rom, expected);
@@ -64,7 +47,7 @@ public class GameUtils {
 		// return false;
 	}
 
-	public static Comparison compare(IGame game, IGame ref) {
+	public static Comparison compare(IGame<?> game, IGame<?> ref) {
 		List<? extends IRom> roms = new ArrayList<IRom>(game.getRoms());
 		List<? extends IRom> refRoms = new ArrayList<IRom>(ref.getRoms());
 		ComparisonImpl ret = new ComparisonImpl();
@@ -110,7 +93,7 @@ public class GameUtils {
 	}
 
 	private static class ComparisonImpl implements Comparison {
-		List<Difference> differences = new ArrayList<GameUtils.Comparison.Difference>();
+		List<Difference> differences = new ArrayList<GameComparator.Comparison.Difference>();
 
 		@Override
 		public List<Difference> getDifferences() {

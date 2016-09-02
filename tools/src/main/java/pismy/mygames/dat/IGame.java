@@ -2,20 +2,29 @@ package pismy.mygames.dat;
 
 import java.util.List;
 
-public interface IGame {
+public abstract class IGame<R extends IRom> {
 
-	String getName();
+	public abstract String getName();
 	
-	String getDescription();
+	public abstract String getDescription();
 	
-	int getYear();
+	public abstract int getYear();
 	
-	String getCloneOf();
+	public abstract String getCloneOf();
 
-	List<? extends IRom> getRoms();
+	public abstract List<R> getRoms();
 
-	String getCategory();
+	public abstract String getCategory();
 
-	String getManufacturer();
+	public abstract String getManufacturer();
+	
+	public R byName(String name) {
+		for(R g : getRoms()) {
+			if(name.equals(g.getName())) {
+				return g;
+			}
+		}
+		return null;
+	}
 
 }

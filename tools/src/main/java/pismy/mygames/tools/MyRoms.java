@@ -9,7 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import pismy.mygames.Files;
+import pismy.mygames.MyMameEnv;
 import pismy.mygames.dat.IGame;
 import pismy.mygames.dat.file.ZipDat;
 import pismy.mygames.dat.legacy.MameDat;
@@ -17,7 +17,7 @@ import pismy.mygames.dat.xml.DataFile;
 import pismy.mygames.dat.xml.Game;
 import pismy.mygames.dat.xml.Mame;
 import pismy.mygames.dat.xml.YesNo;
-import pismy.mygames.utils.GameUtils;
+import pismy.mygames.utils.GameComparator;
 import pismy.mygames.utils.parse.ParseError;
 
 public class MyRoms {
@@ -25,16 +25,16 @@ public class MyRoms {
 	 * Lists all the ROMS I have
 	 */
 	public static void main(String[] args) throws IOException, ParseError, JAXBException, SAXException, ParserConfigurationException {
-		MameDat mame4all = MameDat.load(Files.getMame4AllDat());
+		MameDat mame4all = MameDat.load(MyMameEnv.getMame4AllDat());
 		System.out.println("mame4all ROMs: "+mame4all.getGames().size());
 
-		Mame advmame = Mame.load(Files.getAdvMameDat());
+		Mame advmame = Mame.load(MyMameEnv.getAdvMameDat());
 		System.out.println("advmame ROMs: "+advmame.getGames().size());
 
-		DataFile fba = DataFile.load(Files.getFbaDat());
+		DataFile fba = DataFile.load(MyMameEnv.getFbaDat());
 		System.out.println("FBA ROMs: "+fba.getGames().size());
 
-		ZipDat advmameroms = new ZipDat(Files.getAdvMameRomsDir());
+		ZipDat advmameroms = new ZipDat(MyMameEnv.getAdvMameRomsDir());
 		System.out.println("my advmame ROMs: "+advmameroms.getGames().size());
 		
 		// now build table
@@ -45,7 +45,7 @@ public class MyRoms {
 		
 		for(IGame game : advmameroms.getGames()) {
 			String name = game.getName();
-			Game advMameGame = GameUtils.getGameByName(advmame, name);
+			Game advMameGame = advmame.byName(name);
 			
 			// ROM
 			writer.write(name);
@@ -77,7 +77,7 @@ public class MyRoms {
 			}
 			writer.write(";");
 			// mame4all
-			pismy.mygames.dat.legacy.Game mame4allGame = GameUtils.getGameByName(mame4all, name);
+			pismy.mygames.dat.legacy.Game mame4allGame = mame4all.byName(name);
 			if(mame4allGame == null) {
 				writer.write("N/A");
 			}
@@ -88,7 +88,7 @@ public class MyRoms {
 			}
 			writer.write(";");
 			// FBA
-			Game fbaGame = GameUtils.getGameByName(fba,name);
+			Game fbaGame = fba.byName(name);
 			if(fbaGame == null) {
 				writer.write("N/A");
 			}

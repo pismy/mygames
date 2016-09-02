@@ -7,7 +7,7 @@ import java.util.List;
 
 import pismy.mygames.dat.IDat;
 
-public class ZipDat implements IDat {
+public class ZipDat extends IDat<ZipGame> {
 	final File dir;
 	final List<ZipGame> games;
 	public ZipDat(File dir) {

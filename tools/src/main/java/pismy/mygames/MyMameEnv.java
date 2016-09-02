@@ -2,7 +2,7 @@ package pismy.mygames;
 
 import java.io.File;
 
-public class Files {
+public class MyMameEnv {
 	public static File getAdvMameRomsDir() {
 //		return new File("E:/perso/MAME/config/roms");
 		return new File("C:/My Program Files/MameUI64/ROMs");
